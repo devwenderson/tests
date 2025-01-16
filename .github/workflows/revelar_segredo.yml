@@ -9,7 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Revelar segredo
+        env: 
+          segredo: ${{ secrets.SEGREDO }}
         run: |
-          echo ${{ secrets.SEGREDO }}
+          echo "$segredo"
         
     
