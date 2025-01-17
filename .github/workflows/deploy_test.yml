@@ -1,0 +1,24 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu latest
+    steps:
+      - name: connect ssh
+        run: |
+          mkdir -p ~/.ssh/
+          echo "${{ secrets.SSH_KEY_PRIV }}" > ~/.ssh/id_rsa
+          echo "${{ secrets.SSH_KEY_PUB }}" > ~/.ssh/id_rsa.pub
+          chmod 600 ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa.pub
+          ssh-keyscan -H ${{ secrets.IP }} > ~/.ssh/know_hosts
+      - name: run script
+        run: |
+          ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER }} "bash deploy.sh helloWorld"
+
+      
