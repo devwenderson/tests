@@ -17,6 +17,7 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519.pub
           ssh-keyscan -H ${{ secrets.IP }} > ~/.ssh/known_hosts
+          ls -l ~/.ssh/id_ed25519 ~/.ssh/id_ed25519.pub
       - name: run script
         run: |
           ssh -i ~/.ssh/id_ed25519 ${{ secrets.SERVER }} "bash deploy.sh helloWorld"
